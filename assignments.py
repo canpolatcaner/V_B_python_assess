@@ -1,4 +1,6 @@
-""""    print ("Merhaba", isim)
+#selam veren fonksiyon
+"""def selam_ver(isim):
+    print ("Merhaba", isim)
 selam_ver ("Caner")"""
 #inputla alıp fonksiyonla çağrılan 
 """def selam_ver(isim):
@@ -271,155 +273,59 @@ def hesapla_ucgen():
         print("\nHata: Girdiğiniz kenarlar bir üçgen oluşturmuyor!")
 
 hesapla_ucgen()"""
-#Dairenin çevresi ve alanı
-"""import math
-pi=math.pi
-while True:
-    r=input("Dairenin yarıçapını giriniz\t:")
-    if r.lower()=="q": #çıkış kontrolü
-        print("Programdan çıkılıyor...")
-        break
-    try:
-        r=r.replace(",",".")
-        if r.replace(".","").isdigit():
-            yaricap=float (r)
-            cevre= pi*(yaricap*2)
-            alan= pi*(yaricap**2)
-            cizgi=[]
-            cizgi.append(alan)
-            print("-"*len(str(alan)) + "Sonuç" +"-"*len(str(alan)))
-            print(f"Dairenin çevresi: {cevre:.4f}")
-            print(f"Dairenin alanı: {alan:.4f}")
-            print("Programdan çıkmak için 'q' tuşuna basınız.")
-        else:
-            print("Hatalı giriş yaptınız! Lütfen yalnızca sayısal bir değer giriniz.")
-    except ValueError:
-        print("Lütfen geçerli bir sayı giriniz.")"""
-#Newton serbest düşüş (h = ½*g*t**2)
-"""
-def yukseklik(sure):
-    g = 9.81
-    h = 0.5 * g * sure**2
-    return h
 
-def sure(yukseklik):
-    g = 9.81
-    t = (2 * yukseklik / g)**0.5
-    return t
 
-while True:
-    print("*"*30)
-    sec = input("Yükseklik hesaplamak için Y'ye basınız." +
-                "\nSüre hesaplamak için S'ye basınız.\nÇıkmak için 'q''ya basınız:\n" + "*"*30)
-    
-    if sec.lower() == "q":
-        print("Programdan çıkılıyor...")
-        break
-    
-    elif sec.lower() == "y":
-        print("-"*30)
-        sure_degeri = input("Lütfen süreyi saniye cinsinden giriniz: ")
-        try:
-            sure_float = float(sure_degeri.replace(",", "."))
-            h = yukseklik(sure_float)
-            print("-"*30)
-            print(f"{sure_float:.2f} saniyede {h:.2f} metre serbest düşer.")
-            print("-"*30)
-        except ValueError:
-            print("Lütfen geçerli bir sayısal değer giriniz.")
-    
-    elif sec.lower() == "s":
-        print("-"*30)
-        yukseklik_degeri = input("Lütfen yüksekliği metre cinsinden giriniz: ")
-        try:
-            yukseklik_float = float(yukseklik_degeri.replace(",", "."))
-            t = sure(yukseklik_float)
-            print("-"*30)
-            print(f"{yukseklik_float:.2f} metreden {t:.2f} saniyede yere varır.")
-            print("-"*30)
-        except ValueError:
-            print("Lütfen geçerli bir sayısal değer giriniz.")
-    
-    else:
-        print("-"*10 + "Hatalı giriş yaptınız!" + "-"*10 +
-        "\n\t***Lütfen Y, S veya Q'ya basınız.***")"""
-# Bilmece elif ile
-"""cevap_hakki=3
 
-while cevap_hakki>0:
-    cevap=input("*"*5 + "Dışarıda sağanak yağmur altında tamamen"
-            +"\nkorumasız olan bir adam var fakat saçının tek bir teli dahi ıslanmadı."
-            +"\n Neden? :D" + "*"*8 + "\n")
-    if cevap.lower()=="adam kelmiş":
-        print("Doğru :D")
-        break
-    elif cevap.lower()=="adam kel":
-        print("Doğru :D")
-        break
-    elif cevap.lower()=="çünkü kelmiş":
-        print("Doğru :D")
-        break
-    elif cevap.lower()=="kelmiymiş?":
-        print("Doğru :D")
-        break
-    elif cevap.lower()=="kelmiymiş":
-        print("Doğru :D")
-        break
-    elif cevap.lower()=="kelmiş":
-        print("Doğru :D")
-        break
-    elif cevap.lower()=="kel":
-        print("Doğru :D")
-        break
-    else:
-        cevap_hakki-=1
-        if cevap_hakki>0:
-            print("-"*30)
-            print(f"Olmadı, bi daha dene...\nKalan hakkın:{cevap_hakki}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  
             
-        else:
-            print("-"*30)
-            print("Olmadı, bi dahaki sefere artık...\n Çünkü; adam kelmiş! :D")"""
-#Bilmece liste ile
-"""
-dogru_cevaplar=[
-    "adam kelmiş",
-    "adam kel",
-    "çünkü kelmiş",
-    "kelmiymiş?",
-    "kelmiş",
-    "kel",
-    "kel çünkü",
-    "kel mi",
-    "kel mi?"
-    ]
-cevap_hakki=3
-
-while cevap_hakki>0:
-    cevap=input("*"*5 + "Dışarıda sağanak yağmur altında tamamen"
-            +"\nkorumasız olan bir adam var fakat saçının tek bir teli dahi ıslanmadı."
-            +"\n Neden? :D" + "*"*8 + "\n")
-    try:
-        if cevap.lower() in dogru_cevaplar:  
-            print("Doğru :D")
-            break
-
-        else:
-            cevap_hakki-=1
-            if cevap_hakki>0:
-                print("-"*30)
-                print(f"Olmadı, bi daha dene...\nKalan hakkın:{cevap_hakki}")
-                
-            else:
-                print("-"*30)
-                print("Olmadı, bi dahaki sefere artık...\n Çünkü; adam kelmiş! :D")
-    except ValueError:
-        print("Hile yapma!")"""
             
         
-          
+        
     
     
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
-

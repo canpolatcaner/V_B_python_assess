@@ -305,3 +305,86 @@ for a in range(4):
 
 
 input()
+import turtle
+for bbb in range(8):
+    for a in range(4):
+        turtle.forward(50)
+        turtle.right(90)
+    turtle.right(45)
+
+
+input()
+
+
+import turtle as tt
+
+
+tt.speed(10)
+tt.color("red")
+for bbb in range(8):
+    for a in range(4):
+        tt.forward(50)
+        tt.right(90)
+    tt.right(45)
+
+
+input()
+
+
+import turtle as tt
+
+
+tt.speed(10)
+tt.color("red")
+for bbb in range(24):
+    for a in range(4):
+        tt.forward(50)
+        tt.right(90)
+    tt.right(15)
+
+
+input()
+
+
+import turtle as tt
+import random as r
+
+
+tt.speed(10)
+tt.color("red")
+
+
+tt.penup()
+tt.goto(-200,100)
+tt.pendown()
+for a in range(4):
+    tt.forward(50)
+    tt.right(90)
+
+
+input()
+
+
+
+
+import turtle as tt
+import random as r
+
+
+tt.speed(10)
+renkler = ["red","green","blue"]
+
+
+for aa in range(10):
+    # tt.color(r[2])
+    tt.color(r.choice(renkler))
+    tt.penup()
+    tt.goto(r.randint(-200,200),r.randint(-100,300))
+    tt.pendown()
+    kenaru = r.randint(50,150)
+    for a in range(4):
+        tt.forward(kenaru)
+        tt.right(90)
+
+
+input()

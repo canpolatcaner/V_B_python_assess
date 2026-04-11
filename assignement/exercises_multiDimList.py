@@ -28,11 +28,8 @@ TCDD = { # json tipinin python şekli
     "İzmir":""
 }
 print(TCDD)
-print("=============")
 print("Ankaradaki trenler:",TCDD["Ankara"])
-print("=============")
 print("İzmirdeki trenler:",TCDD["İzmir"])
-print("=============")
 print("sirkecideki trenler:",TCDD["sirkeci"])
 print("=============")
 print("Ankaradaki trenler:",TCDD["Ankara"])

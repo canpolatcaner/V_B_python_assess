@@ -2,6 +2,8 @@ import random
 sayi=[5,8,2]
 sayi+=[1,7,3] # bu şekilde liste halinde eklenir
 print(sayi)
+sayi[1] = 9
+print(sayi)
 sayi+=[19]
 print(sayi)
 sayi.append(21)

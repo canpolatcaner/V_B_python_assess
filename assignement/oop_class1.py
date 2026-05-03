@@ -1,4 +1,4 @@
-#Sınıf adları büyük harfle başlar ve tekil olur, çoğul olmaz. 
+Sınıf adları büyük harfle başlar ve tekil olur, çoğul olmaz. 
 #sınıf tanımlama
 # class Ogrenci(): # şeklinde de kullanılabilir.
 

@@ -127,3 +127,49 @@ bb.setLayout(icerik)
 
 bb.show()
 aa.exec()
+
+
+
+# widgetları sınıf içinde oluşturup sınıftan pence oluşturduk.
+from PyQt6.QtWidgets import *
+
+
+class Menu(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+
+        self.setWindowTitle("Widgets App")
+
+
+        layout = QVBoxLayout()
+        layout.addWidget(QCheckBox())
+        layout.addWidget(QComboBox())
+        layout.addWidget(QDateEdit())
+        layout.addWidget(QDateTimeEdit())
+        layout.addWidget(QDial())
+        layout.addWidget(QDoubleSpinBox())
+        layout.addWidget(QFontComboBox())
+        layout.addWidget(QLCDNumber())
+        layout.addWidget(QLabel())
+        layout.addWidget(QLineEdit())
+        layout.addWidget(QProgressBar())
+        layout.addWidget(QPushButton())
+        layout.addWidget(QRadioButton())
+        layout.addWidget(QSlider())
+        layout.addWidget(QSpinBox())
+        layout.addWidget(QTimeEdit())
+
+
+        widget = QWidget()
+        widget.setLayout(layout)
+
+
+        self.setCentralWidget(widget)
+
+
+xx = QApplication([])
+aaa = Menu()
+aaa.show()
+xx.exec()
+

@@ -112,7 +112,7 @@ print("Arac ureticisi:", araclar.uretici)
 arac1=araclar() # Sınıftan Ornekleme
 
 print("\narac1 Nesne örneği için")
-print("Arac turu     :",arac1.tur) # değer atamadığım için default olanlar gelecek.
+print("Arac turu     :",arac1.turu) # değer atamadığım için default olanlar gelecek.
 print("Arac ureticisi:",arac1.uretici)
 
 arac2=araclar() # Sınıftan Ornekleme

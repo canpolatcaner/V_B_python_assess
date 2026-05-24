@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoş Geldiniz | Haber, Bilim, Teknoloji & Finans</title>
+    <!-- FontAwesome ve Google Fonts -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --accent-purple: #c084fc;
+            --accent-red: #f87171;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Arka Plan Efektleri */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -10%; left: -10%;
+            width: 50%; height: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .live-time {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+        }
+
+        /* Dashboard Izgara Yapısı */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px var(--border-glow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+        }
+
+        /* Genişlik Ayarları */
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-12 { grid-column: span 12; }
+
+        /* MODÜL: Döviz Kurları */
+        .currency-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .currency-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #111827;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .currency-name { display: flex; align-items: center; gap: 8px; font-weight: bold;}
+        .currency-val { color: var(--accent-green); }
+
+        /* MODÜL: Haberler & Teknoloji */
+        .news-list, .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .news-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #334155;
+        }
+        .news-item:last-child { border: none; }
+        .news-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #334155;
+        }
+        .news-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .news-details h4 {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+        .news-details h4:hover { color: var(--accent-blue); }
+        .news-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* MODÜL: Sinema */
+        .cinema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .movie-card {
+            background: #111827;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            font-size: 0.8rem;
+            border: 1px solid #334155;
+        }
+        .movie-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .movie-title {
+            padding: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Scrollbar Özelleştirme */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+        /* Responsive Tasarım */
+        @media (max-width: 1024px) {
+            .col-4, .col-6, .col-8 { grid-column: span 6; }
+        }
+        @media (max-width: 768px) {
+            .col-4, .col-6, .col-8 { grid-column: span 12; }
+            header { flex-direction: column; gap: 15px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1><i class="fa-solid fa-ghost"></i> ÖĞRETMEN SAYFASI</h1>
+        </div>
+        <!-- Canlı Saat Modülü -->
+        <div class="live-time" id="clock">00:00:00</div>
+    </header>
+
+    <div class="dashboard-grid">
+        
+        <!-- 1. MODÜL: CANLI DÖVİZ KURLARI (4 Sütun) -->
+  	<h1><i class="fa-solid fa-ghost"></i> <a href="/ogretmen"> Öğretmen için tıkla </a></h1>
+        	
+    	
+        <div class="card col-4">
+            <div class="card-title" style="color: var(--accent-green);">
+                <i class="fa-solid fa-chart-line"></i> Canlı Finans Piyasası
+            </div>
+            <div class="currency-widget" id="currency-box">
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-dollar-sign"></i> USD / TRY</span>
+                    <span class="currency-val" id="usd-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-euro-sign"></i> EUR / TRY</span>
+                    <span class="currency-val" id="eur-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-sterling-sign"></i> GBP / TRY</span>
+                    <span class="currency-val" id="gbp-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-bitcoin"></i> BTC / USD</span>
+                    <span class="currency-val" id="btc-rate" style="color: var(--accent-purple);">Yükleniyor...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. MODÜL: TEKNOLOJİ & BİLİM HABERLERİ (8 Sütun) -->
+        <div class="card col-8">
+            <div class="card-title" style="color: var(--accent-blue);">
+                <i class="fa-solid fa-microchip"></i> Bilim & Teknoloji Dünyası
+            </div>
+            <div class="tech-list" id="tech-news-box">
+                <!-- API'den gelecek içerikler buraya basılacak -->
+                <p style="padding: 20px; text-align: center; color: var(--text-muted);">Haberler derleniyor...</p>
+            </div>
+        </div>
+
+        <!-- 3. MODÜL: GÜNLÜK DÜNYA HABERLERİ (6 Sütun) -->
+        <div class="card col-6">
+            <div class="card-title" style="color: var(--accent-purple);">
+                <i class="fa-solid fa-globe"></i> Küresel Gündemden Başlıklar
+            </div>
+            <div class="news-list" id="global-news-box">
+                <p style="padding: 20px; text-align: center; color: var(--text-muted);">Gündem yükleniyor...</p>
+            </div>
+        </div>
+
+        <!-- 4. MODÜL: SİNEMADA BU HAFTA (6 Sütun) -->
+        <div class="card col-6">
+            <div class="card-title" style="color: var(--accent-red);">
+                <i class="fa-solid fa-film"></i> Popüler & Güncel Filmler
+            </div>
+            <div class="cinema-grid" id="cinema-box">
+                <!-- Sinema verileri buraya basılacak -->
+                <p style="padding: 20px; text-align: center; color: var(--text-muted);">Vizyon listesi hazırlanıyor...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SİHRİN GERÇEKLEŞTİĞİ JAVASCRIPT BÖLÜMÜ -->
+    <script>
+        // 1. CANLI SAAT FONKSİYONU
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('tr-TR');
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. DÖVİZ VE KRİPTO VERİLERİNİ ÇEKME (Free API: er-api & coingecko)
+        async function fetchFinancialData() {
+            try {
+                // Döviz Kurları (Baz para birimi TRY yapılmıştır)
+                const forexRes = await fetch('https://er-api.com');
+                const forexData = await forexRes.json();
+                
+                if(forexData && forexData.rates) {
+                    const usdToTry = (1 / forexData.rates.USD).toFixed(2);
+                    const eurToTry = (1 / forexData.rates.EUR).toFixed(2);
+                    const gbpToTry = (1 / forexData.rates.GBP).toFixed(2);
+
+                    document.getElementById('usd-rate').textContent = `₺ ${usdToTry}`;
+                    document.getElementById('eur-rate').textContent = `₺ ${eurToTry}`;
+                    document.getElementById('gbp-rate').textContent = `₺ ${gbpToTry}`;
+                }
+
+                // Bitcoin Fiyatı
+                const btcRes = await fetch('https://coingecko.com');
+                const btcData = await btcRes.json();
+                if(btcData && btcData.bitcoin) {
+                    document.getElementById('btc-rate').textContent = `$ ${btcData.bitcoin.usd.toLocaleString()}`;
+                }
+            } catch (error) {
+                console.error("Finans verileri yüklenemedi:", error);
+            }
+        }
+
+        // 3. TEKNOLOJİ VE KÜRESEL HABERLERİ ÇEKME (Açık kaynak RSS to JSON parser kullanılmıştır)
+        async function fetchNews() {
+            try {
+                // Teknoloji Haberleri için güvenilir bir açık kaynak feed kullanıyoruz
+                const techRes = await fetch('https://rss2json.com');
+                const techData = await techRes.json();
+                
+                const techBox = document.getElementById('tech-news-box');
+                techBox.innerHTML = '';
+                
+                techData.items.slice(0, 5).forEach(item => {
+                    const cleanImg = item.enclosure.link || item.thumbnail || 'https://placeholder.com';
+                    techBox.innerHTML += `
+                        <div class="news-item">
+                            <img src="${cleanImg}" class="news-img" alt="tech">
+                            <div class="news-details">
+                                <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
+                                <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')} - ${item.author || 'Teknoloji'}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Küresel Gündem Haberleri
+                const globalRes = await fetch('https://rss2json.com');
+                const globalData = await globalRes.json();
+                
+                const globalBox = document.getElementById('global-news-box');
+                globalBox.innerHTML = '';
+
+                globalData.items.slice(0, 5).forEach(item => {
+                    const cleanImg = item.thumbnail || 'https://placeholder.com';
+                    globalBox.innerHTML += `
+                        <div class="news-item">
+                            <img src="${cleanImg}" class="news-img" alt="world">
+                            <div class="news-details">
+                                <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
+                                <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')} - Global</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Haberler yüklenirken hata oluştu:", error);
+            }
+        }
+
+        // 4. SİNEMA VERİLERİNİ ÇEKME (The Movie Database - TMDB sahte feed alternatifi popüler listesi)
+        async function fetchMovies() {
+            try {
+                // Gerçek popüler sinema listesi simülasyonu / Açık popüler API kaynağı
+                // CORS hatası olmaksızın hızlıca trend listesi oluşturuyoruz
+                const movieData = [
+                    {title: "Dune: Part Two", img: "https://tmdb.org"},
+                    {title: "Oppenheimer", img: "https://tmdb.org"},
+                    {title: "The Batman", img: "https://tmdb.org"},
+                    {title: "Interstellar", img: "https://tmdb.org"},
+                    {title: "Blade Runner 2048", img: "https://tmdb.org"},
+                    {title: "Avatar: Way of Water", img: "https://tmdb.org"}
+                ];
+
+                const cinemaBox = document.getElementById('cinema-box');
+                cinemaBox.innerHTML = '';
+
+                movieData.forEach(movie => {
+                    cinemaBox.innerHTML += `
+                        <div class="movie-card">
+                            <img src="${movie.img}" class="movie-img" alt="${movie.title}">
+                            <div class="movie-title">${movie.title}</div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Sinema verisi hatası:", error);
+            }
+        }
+
+        // SİSTEMİ TETİKLEME
+        function initDashboard() {
+            fetchFinancialData();
+            fetchNews();
+            fetchMovies();
+            
+            // Verilerin her 5 dakikada bir otomatik yenilenmesi
+            setInterval(fetchFinancialData, 300000);
+            setInterval(fetchNews, 300000);
+        }
+
+        window.onload = initDashboard;
+    </script>
+</body>
+</html>

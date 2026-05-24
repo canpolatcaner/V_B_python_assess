@@ -1,0 +1,563 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKUL TAKİP SİSTEMİ | Home</title>
+    <!-- FontAwesome ve Google Fonts -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="icon" href="{% static 'resimler/school.png' %}">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-green: #4ade80;
+            --accent-purple: #c084fc;
+            --accent-red: #f87171;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Arka Plan Efektleri */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -10%; left: -10%;
+            width: 50%; height: 50%;
+            background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logo-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .live-time {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+            margin-top: 5px;
+        }
+
+        /* Navigasyon Kartı */
+        .nav-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .nav-card a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: transform 0.2s;
+        }
+
+        .nav-card a:hover {
+            transform: scale(1.05);
+        }
+
+        /* Dashboard Dikey Akış Yapısı */
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            width: 100%; /* Kartların tam genişlikte alt alta gelmesi için */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px var(--border-glow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+        }
+
+        /* MODÜL: Döviz Kurları */
+        .currency-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .currency-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #111827;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .currency-name { display: flex; align-items: center; gap: 8px; font-weight: bold;}
+        .currency-val { color: var(--accent-green); }
+
+        /* MODÜL: Haberler & Teknoloji */
+        .news-list, .tech-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .news-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #334155;
+        }
+        .news-item:last-child { border: none; }
+        .news-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #334155;
+        }
+        .news-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .news-details h4 {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+        .news-details h4:hover { color: var(--accent-blue); }
+        .news-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* MODÜL: Sinema */
+        .cinema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .movie-card {
+            background: #111827;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            font-size: 0.8rem;
+            border: 1px solid #334155;
+        }
+        .movie-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .movie-title {
+            padding: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Magnetic Field Button Stilleri */
+        .btn {
+            position: relative;
+            padding: 1.5rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            overflow: visible;
+            transition: all 0.4s ease;
+            min-width: 200px;
+            z-index: 1;
+        }
+        .magnetic {
+            background: #2d2d2d;
+            border-radius: 8px;
+        }
+        .particles-field {
+            position: absolute;
+            inset: -100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .magnetic:hover .particles-field {
+            opacity: 1;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translate(var(--x), var(--y)) scale(0); }
+            50% { transform: translate(calc(var(--x) * -1), calc(var(--y) * -1)) scale(1); }
+            100% { transform: translate(var(--x), var(--y)) scale(0); }
+        }
+
+        /* Scrollbar Özelleştirme */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+
+
+        /* Hareketli Grid Arka Plan Konteyneri */
+.animated-grid-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2; /* Diğer tüm elementlerin ve body::before efektinizin arkasında kalması için */
+    background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px; /* Grid karelerinin boyutu */
+    background-position: center;
+    animation: gridMove 20s linear infinite;
+}
+
+/* Arka plandaki gridin yavaşça hareket etmesini sağlayan animasyon */
+@keyframes gridMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 40px 40px;
+    }
+}
+
+/* Fareyi takip eden neon parlama efekti */
+.grid-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.15) 0%, rgba(56, 189, 248, 0.05) 40%, transparent 70%);
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Tıklamaları engellememesi için kritik */
+    z-index: -1;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+}
+    </style>
+</head>
+<body>
+<div class="animated-grid-bg"></div>
+<div class="grid-glow" id="gridGlow"></div>
+    <!-- ÜST BİLGİ VE NAVİGASYON ALANI -->
+    <header>   
+        <button class="btn magnetic">
+            <span class="logo-title">OKUL TAKİP SİSTEMİ</span>
+            <div class="particles-field" id="particleField"></div>
+            <!-- Canlı Saat Modülü -->
+            <div class="live-time" id="clock">00:00:00</div>
+        </button>
+
+        <div class="nav-card">
+            <a href="/ogretmen"> 
+                <img width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQajzGKXgTbE2LhK0Rds-zhSgEjD5bKcQ3E8Q&s" alt="Öğretmen">
+            </a>
+            <a href="/ogrenci">
+                <img width="100px" src="https://previews.123rf.com/images/tvectoricons/tvectoricons1808/tvectoricons180806610/107158582-student-vector-icon-isolated-on-transparent-background-student-logo-concept.jpg" alt="Öğrenci">
+            </a>
+            <a href="/mudur">
+                <img width="100px" src="{% static 'resimler/princ.jpg' %}" alt="Müdür">
+            </a>
+            <a href="/mudur_yardimcilari"> 
+                <img width="150px" src="{% static 'resimler/principles.gif' %}" alt="Müdür Yardımcıları">
+            </a>
+            <a href="/destek_personeli" style="color: var(--accent-blue); font-weight: bold;">Destek Personeli</a>
+        </div>
+    </header>
+
+    <!-- ANA İÇERİK KONTEYNERİ (ALT ALTA AKIŞ) -->
+    <div class="dashboard-container">
+
+        <!-- 1. MODÜL: CANLI DÖVİZ KURLARI -->
+        <div class="card">
+            <div class="card-title" style="color: var(--accent-green);">
+                <i class="fa-solid fa-chart-line"></i> Canlı Finans Piyasası
+            </div>
+            <div class="currency-widget" id="currency-box">
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-dollar-sign"></i> USD / TRY</span>
+                    <span class="currency-val" id="usd-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-euro-sign"></i> EUR / TRY</span>
+                    <span class="currency-val" id="eur-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-sterling-sign"></i> GBP / TRY</span>
+                    <span class="currency-val" id="gbp-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-bitcoin"></i> BTC / USD</span>
+                    <span class="currency-val" id="btc-rate" style="color: var(--accent-purple);">Yükleniyor...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. MODÜL: TEKNOLOJİ & BİLİM HABERLERİ -->
+        <div class="card">
+            <div class="card-title" style="color: var(--accent-blue);">
+                <i class="fa-solid fa-microchip"></i> Bilim & Teknoloji Dünyası
+            </div>
+            <div class="tech-list" id="tech-news-box">
+                <p style="padding: 20px; text-align: center; color: var(--text-muted);">Haberler derleniyor...</p>
+            </div>
+        </div>
+
+        <!-- 3. MODÜL: GÜNLÜK DÜNYA HABERLERİ -->
+        <div class="card">
+            <div class="card-title" style="color: var(--accent-purple);">
+                <i class="fa-solid fa-globe"></i> Küresel Gündemden Başlıklar
+            </div>
+            <div class="news-list" id="global-news-box">
+                <p style="padding: 20px; text-align: center; color: var(--text-muted);">Gündem yükleniyor...</p>
+            </div>
+        </div>
+
+        <!-- 4. MODÜL: SİNEMADA BU HAFTA -->
+        <div class="card">
+            <div class="card-title" style="color: var(--accent-red);">
+                <i class="fa-solid fa-film"></i> Popüler & Güncel Filmler
+            </div>
+            <div class="cinema-grid" id="cinema-box">
+                <p style="padding: 20px; text-align: center; color: var(--text-muted);">Vizyon listesi hazırlanıyor...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT BÖLÜMÜ (Değiştirilmedi) -->
+    <script>
+        // Efekt Parçacıkları Oluşturma Scripti
+        const particleField = document.getElementById('particleField');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
+            particle.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
+            particle.style.animation = `particleFloat ${1 + Math.random() * 2}s infinite`;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particleField.appendChild(particle);
+        }
+
+        // 1. CANLI SAAT FONKSİYONU
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('tr-TR');
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. DÖVİZ VE KRİPTO VERİLERİNİ ÇEKME
+        async function fetchFinancialData() {
+            try {
+                const forexRes = await fetch('https://er-api.com');
+                const forexData = await forexRes.json();
+                
+                if(forexData && forexData.rates) {
+                    const usdToTry = (1 / forexData.rates.USD).toFixed(2);
+                    const eurToTry = (1 / forexData.rates.EUR).toFixed(2);
+                    const gbpToTry = (1 / forexData.rates.GBP).toFixed(2);
+
+                    document.getElementById('usd-rate').textContent = `₺ ${usdToTry}`;
+                    document.getElementById('eur-rate').textContent = `₺ ${eurToTry}`;
+                    document.getElementById('gbp-rate').textContent = `₺ ${gbpToTry}`;
+                }
+
+                const btcRes = await fetch('https://coingecko.com');
+                const btcData = await btcRes.json();
+                if(btcData && btcData.bitcoin) {
+                    document.getElementById('btc-rate').textContent = `$ ${btcData.bitcoin.usd.toLocaleString()}`;
+                }
+            } catch (error) {
+                console.error("Finans verileri yüklenemedi:", error);
+            }
+        }
+
+        // 3. TEKNOLOJİ VE KÜRESEL HABERLERİ ÇEKME
+        async function fetchNews() {
+            try {
+                const techRes = await fetch('https://rss2json.com');
+                const techData = await techRes.json();
+                
+                const techBox = document.getElementById('tech-news-box');
+                techBox.innerHTML = '';
+                
+                techData.items.slice(0, 5).forEach(item => {
+                    const cleanImg = item.enclosure.link || item.thumbnail || 'https://placeholder.com';
+                    techBox.innerHTML += `
+                        <div class="news-item">
+                            <img src="${cleanImg}" class="news-img" alt="tech">
+                            <div class="news-details">
+                                <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
+                                <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')} - ${item.author || 'Teknoloji'}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const globalRes = await fetch('https://rss2json.com');
+                const globalData = await globalRes.json();
+                
+                const globalBox = document.getElementById('global-news-box');
+                globalBox.innerHTML = '';
+
+                globalData.items.slice(0, 5).forEach(item => {
+                    const cleanImg = item.thumbnail || 'https://placeholder.com';
+                    globalBox.innerHTML += `
+                        <div class="news-item">
+                            <img src="${cleanImg}" class="news-img" alt="world">
+                            <div class="news-details">
+                                <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
+                                <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')} - Global</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Haberler yüklenirken hata oluştu:", error);
+            }
+        }
+
+        // 4. SİNEMA VERİLERİNİ ÇEKME
+        async function fetchMovies() {
+            try {
+                const movieData = [
+                    {title: "Dune: Part Two", img: "https://tmdb.org"},
+                    {title: "Oppenheimer", img: "https://tmdb.org"},
+                    {title: "The Batman", img: "https://tmdb.org"},
+                    {title: "Interstellar", img: "https://tmdb.org"},
+                    {title: "Blade Runner 2048", img: "https://tmdb.org"},
+                    {title: "Avatar: Way of Water", img: "https://tmdb.org"}
+                ];
+
+                const cinemaBox = document.getElementById('cinema-box');
+                cinemaBox.innerHTML = '';
+
+                movieData.forEach(movie => {
+                    cinemaBox.innerHTML += `
+                        <div class="movie-card">
+                            <img src="${movie.img}" class="movie-img" alt="${movie.title}">
+                            <div class="movie-title">${movie.title}</div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Sinema verisi hatası:", error);
+            }
+        }
+
+        // SİSTEMİ TETİKLEME
+        function initDashboard() {
+            fetchFinancialData();
+            fetchNews();
+            fetchMovies();
+            
+            setInterval(fetchFinancialData, 300000);
+            setInterval(fetchNews, 300000);
+        }
+
+        window.onload = initDashboard;
+
+
+
+        // Fareyi takip eden grid parlama efekti scripti
+const gridGlow = document.getElementById('gridGlow');
+
+window.addEventListener('mousemove', (e) => {
+    // RequestAnimationFrame kullanarak performansı optimize ediyoruz (Kasılmayı önler)
+    window.requestAnimationFrame(() => {
+        gridGlow.style.left = `${e.clientX}px`;
+        gridGlow.style.top = `${e.clientY}px`;
+    });
+});
+    </script>
+</body>
+</html>

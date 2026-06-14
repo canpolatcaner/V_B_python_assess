@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 import anasayfa.views
 import ogrenci.views
 import ogretmen.views
@@ -23,15 +24,24 @@ import mudur.views
 import mudur_yardimcilari.views
 import destek_personeli.views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ana/', anasayfa.views.anatr),
     path('home/', anasayfa.views.anaen),
     path('', anasayfa.views.anatr),
-    path('ogrenci/', ogrenci.views.ana_ogrenci),
+    path('ogrenci/', ogrenci.views.ana_ogrenci, name='ogrenciler'),
     path('ogretmen/', ogretmen.views.ana_ogretmen),
     path('mudur/', mudur.views.ana_mudur),
     path('mudur_yardimcilari/', mudur_yardimcilari.views.ana_mudur_yardimcilari),
     path('destek_personeli/', destek_personeli.views.ana_destek_personeli),
+    path('ogrenci/ekle', ogrenci.views.ekle),
+   
+  
+  
+    path('ogrenci/detay/<int:gelenid>', ogrenci.views.detay),
+    path('ogrenci/sil/<int:gelenid>', ogrenci.views.sil),
+    path('ogrenci/duzelt/<int:gelenid>', ogrenci.views.guncelle, name='ogrenciduzelt'),
+
 ]
 

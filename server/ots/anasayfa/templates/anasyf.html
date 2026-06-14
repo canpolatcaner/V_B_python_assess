@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OKUL TAKİP SİSTEMİ | Home</title>
-    <!-- FontAwesome ve Google Fonts -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="{% static 'resimler/school.png' %}">
+    
     <style>
         :root {
             --bg-color: #0f172a;
@@ -121,7 +121,7 @@
             border: 1px solid #334155;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            width: 100%; /* Kartların tam genişlikte alt alta gelmesi için */
+            width: 100%;
         }
 
         .card:hover {
@@ -158,6 +158,15 @@
         }
         .currency-name { display: flex; align-items: center; gap: 8px; font-weight: bold;}
         .currency-val { color: var(--accent-green); }
+        
+        /* Cuma günü için link stili */
+        .cuma-link {
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .cuma-link:hover {
+            opacity: 0.8;
+        }
 
         /* MODÜL: Haberler & Teknoloji */
         .news-list, .tech-list {
@@ -243,6 +252,10 @@
             min-width: 200px;
             z-index: 1;
         }
+        .btn a {
+            text-decoration: none;
+            color: inherit;
+        }
         .magnetic {
             background: #2d2d2d;
             border-radius: 8px;
@@ -277,60 +290,72 @@
         ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
 
-
-
         /* Hareketli Grid Arka Plan Konteyneri */
-.animated-grid-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -2; /* Diğer tüm elementlerin ve body::before efektinizin arkasında kalması için */
-    background-image: 
-        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px; /* Grid karelerinin boyutu */
-    background-position: center;
-    animation: gridMove 20s linear infinite;
-}
+        .animated-grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            animation: gridMove 20s linear infinite;
+        }
 
-/* Arka plandaki gridin yavaşça hareket etmesini sağlayan animasyon */
-@keyframes gridMove {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 40px 40px;
-    }
-}
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
 
-/* Fareyi takip eden neon parlama efekti */
-.grid-glow {
-    position: fixed;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(192, 132, 252, 0.15) 0%, rgba(56, 189, 248, 0.05) 40%, transparent 70%);
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    pointer-events: none; /* Tıklamaları engellememesi için kritik */
-    z-index: -1;
-    transition: transform 0.1s ease-out;
-    will-change: transform;
-}
+        /* Fareyi takip eden neon parlama efekti */
+        .grid-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(192, 132, 252, 0.15) 0%, rgba(56, 189, 248, 0.05) 40%, transparent 70%);
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: -1;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        /* Sabit Buton Stili (WhatsApp vb.) */
+        .sabit {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            height: 50px;
+            transition: transform 0.2s;
+        }
+        .sabit:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
-<div class="animated-grid-bg"></div>
-<div class="grid-glow" id="gridGlow"></div>
-    <!-- ÜST BİLGİ VE NAVİGASYON ALANI -->
-    <header>   
+
+    <a href="https://wa.me/285656123" target="_blank">
+        <img class="sabit" src="{% static 'resimler/whats_but.jpg' %}" alt="WhatsApp">
+    </a>
+
+    <div class="animated-grid-bg"></div>
+    <div class="grid-glow" id="gridGlow"></div>
+
+    <header>  
         <button class="btn magnetic">
-            <span class="logo-title">OKUL TAKİP SİSTEMİ</span>
-            <div class="particles-field" id="particleField"></div>
-            <!-- Canlı Saat Modülü -->
-            <div class="live-time" id="clock">00:00:00</div>
+            <a href="/">
+                <span class="logo-title">OKUL TAKİP SİSTEMİ</span>
+                <div class="particles-field" id="particleField"></div>
+                <div class="live-time" id="clock">00:00:00</div>
+            </a>
         </button>
 
         <div class="nav-card">
@@ -344,41 +369,46 @@
                 <img width="100px" src="{% static 'resimler/princ.jpg' %}" alt="Müdür">
             </a>
             <a href="/mudur_yardimcilari"> 
-                <img width="150px" src="{% static 'resimler/principles.gif' %}" alt="Müdür Yardımcıları">
+                <img width="100px" src="{% static 'resimler/viceprcp.png' %}" alt="Müdür Yardımcıları">
             </a>
-            <a href="/destek_personeli" style="color: var(--accent-blue); font-weight: bold;">Destek Personeli</a>
+            <a href="/destek_personeli"> 
+                <img width="100px" src="{% static 'resimler/destek_per.jpg' %}" alt="destek_personeli">
+            </a>
         </div>
     </header>
 
-    <!-- ANA İÇERİK KONTEYNERİ (ALT ALTA AKIŞ) -->
     <div class="dashboard-container">
 
-        <!-- 1. MODÜL: CANLI DÖVİZ KURLARI -->
         <div class="card">
             <div class="card-title" style="color: var(--accent-green);">
-                <i class="fa-solid fa-chart-line"></i> Canlı Finans Piyasası
+                <i class="fa-solid fa-chart-line"></i> OKULUMUZDA BU HAFTA (FAALİYETLERİMİZ)
             </div>
             <div class="currency-widget" id="currency-box">
                 <div class="currency-item">
-                    <span class="currency-name"><i class="fa-solid fa-dollar-sign"></i> USD / TRY</span>
+                    <span class="currency-name"><i class="fa-solid fa-calendar-day"></i> PAZARTESİ</span>
                     <span class="currency-val" id="usd-rate">Yükleniyor...</span>
                 </div>
                 <div class="currency-item">
-                    <span class="currency-name"><i class="fa-solid fa-euro-sign"></i> EUR / TRY</span>
+                    <span class="currency-name"><i class="fa-solid fa-calendar-day"></i> SALI</span>
                     <span class="currency-val" id="eur-rate">Yükleniyor...</span>
                 </div>
                 <div class="currency-item">
-                    <span class="currency-name"><i class="fa-solid fa-sterling-sign"></i> GBP / TRY</span>
+                    <span class="currency-name"><i class="fa-solid fa-calendar-day"></i> ÇARŞAMBA</span>
                     <span class="currency-val" id="gbp-rate">Yükleniyor...</span>
                 </div>
                 <div class="currency-item">
-                    <span class="currency-name"><i class="fa-solid fa-bitcoin"></i> BTC / USD</span>
-                    <span class="currency-val" id="btc-rate" style="color: var(--accent-purple);">Yükleniyor...</span>
+                    <span class="currency-name"><i class="fa-solid fa-calendar-day"></i> PERŞEMBE</span>
+                    <span class="currency-val" id="btc-rate">Yükleniyor...</span>
+                </div>
+                <div class="currency-item">
+                    <span class="currency-name"><i class="fa-solid fa-calendar-day"></i> CUMA</span>
+                    <a href="https://www.meb.gov.tr/" target="_blank" class="cuma-link">
+                        <span class="currency-val" id="cuma-rate">Yükleniyor...</span>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- 2. MODÜL: TEKNOLOJİ & BİLİM HABERLERİ -->
         <div class="card">
             <div class="card-title" style="color: var(--accent-blue);">
                 <i class="fa-solid fa-microchip"></i> Bilim & Teknoloji Dünyası
@@ -388,7 +418,6 @@
             </div>
         </div>
 
-        <!-- 3. MODÜL: GÜNLÜK DÜNYA HABERLERİ -->
         <div class="card">
             <div class="card-title" style="color: var(--accent-purple);">
                 <i class="fa-solid fa-globe"></i> Küresel Gündemden Başlıklar
@@ -398,7 +427,6 @@
             </div>
         </div>
 
-        <!-- 4. MODÜL: SİNEMADA BU HAFTA -->
         <div class="card">
             <div class="card-title" style="color: var(--accent-red);">
                 <i class="fa-solid fa-film"></i> Popüler & Güncel Filmler
@@ -410,7 +438,6 @@
 
     </div>
 
-    <!-- JAVASCRIPT BÖLÜMÜ (Değiştirilmedi) -->
     <script>
         // Efekt Parçacıkları Oluşturma Scripti
         const particleField = document.getElementById('particleField');
@@ -434,25 +461,28 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. DÖVİZ VE KRİPTO VERİLERİNİ ÇEKME
+        // 2. DÖVİZ VERİLERİNİ ÇEKME (İyileştirilmiş ID Yapısı ile)
         async function fetchFinancialData() {
             try {
-                const forexRes = await fetch('https://er-api.com');
+                const forexRes = await fetch('https://open.er-api.com/v6/latest/USD');
                 const forexData = await forexRes.json();
                 
                 if(forexData && forexData.rates) {
-                    const usdToTry = (1 / forexData.rates.USD).toFixed(2);
-                    const eurToTry = (1 / forexData.rates.EUR).toFixed(2);
-                    const gbpToTry = (1 / forexData.rates.GBP).toFixed(2);
+                    const usdToTry = (1 / forexData.rates.USD * forexData.rates.TRY).toFixed(2);
+                    const eurToTry = (1 / forexData.rates.EUR * forexData.rates.TRY).toFixed(2);
+                    const gbpToTry = (1 / forexData.rates.GBP * forexData.rates.TRY).toFixed(2);
 
-                    document.getElementById('usd-rate').textContent = `₺ ${usdToTry}`;
-                    document.getElementById('eur-rate').textContent = `₺ ${eurToTry}`;
-                    document.getElementById('gbp-rate').textContent = `₺ ${gbpToTry}`;
+                    if(document.getElementById('usd-rate')) document.getElementById('usd-rate').textContent = `₺ ${usdToTry}`;
+                    if(document.getElementById('eur-rate')) document.getElementById('eur-rate').textContent = `₺ ${eurToTry}`;
+                    if(document.getElementById('gbp-rate')) document.getElementById('gbp-rate').textContent = `₺ ${gbpToTry}`;
+                    // Cuma gününe de test amaçlı Euro kurunu yazdırıyoruz fakat ID'si eşsiz:
+                    if(document.getElementById('cuma-rate')) document.getElementById('cuma-rate').textContent = `₺ ${eurToTry}`;
                 }
 
-                const btcRes = await fetch('https://coingecko.com');
+                // API adresleri düzeltildi
+                const btcRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
                 const btcData = await btcRes.json();
-                if(btcData && btcData.bitcoin) {
+                if(btcData && btcData.bitcoin && document.getElementById('btc-rate')) {
                     document.getElementById('btc-rate').textContent = `$ ${btcData.bitcoin.usd.toLocaleString()}`;
                 }
             } catch (error) {
@@ -463,44 +493,45 @@
         // 3. TEKNOLOJİ VE KÜRESEL HABERLERİ ÇEKME
         async function fetchNews() {
             try {
-                const techRes = await fetch('https://rss2json.com');
+                const techRes = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.shiftdelete.net%2Ffeed');
                 const techData = await techRes.json();
                 
                 const techBox = document.getElementById('tech-news-box');
-                techBox.innerHTML = '';
-                
-                techData.items.slice(0, 5).forEach(item => {
-                    const cleanImg = item.enclosure.link || item.thumbnail || 'https://placeholder.com';
-                    techBox.innerHTML += `
-                        <div class="news-item">
-                            <img src="${cleanImg}" class="news-img" alt="tech">
-                            <div class="news-details">
-                                <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
-                                <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')} - ${item.author || 'Teknoloji'}</span>
+                if(techBox && techData.items) {
+                    techBox.innerHTML = '';
+                    techData.items.slice(0, 5).forEach(item => {
+                        const cleanImg = item.thumbnail || 'https://via.placeholder.com/80';
+                        techBox.innerHTML += `
+                            <div class="news-item">
+                                <img src="${cleanImg}" class="news-img" alt="tech">
+                                <div class="news-details">
+                                    <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
+                                    <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')}</span>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                }
 
-                const globalRes = await fetch('https://rss2json.com');
+                const globalRes = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.trthaber.com%2Fmanset_articles.rss');
                 const globalData = await globalRes.json();
                 
                 const globalBox = document.getElementById('global-news-box');
-                globalBox.innerHTML = '';
-
-                globalData.items.slice(0, 5).forEach(item => {
-                    const cleanImg = item.thumbnail || 'https://placeholder.com';
-                    globalBox.innerHTML += `
-                        <div class="news-item">
-                            <img src="${cleanImg}" class="news-img" alt="world">
-                            <div class="news-details">
-                                <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
-                                <span class="news-meta"><i class="fa-regular fa-clock"></i> ${new Date(item.pubDate).toLocaleDateString('tr-TR')} - Global</span>
+                if(globalBox && globalData.items) {
+                    globalBox.innerHTML = '';
+                    globalData.items.slice(0, 5).forEach(item => {
+                        const cleanImg = item.thumbnail || 'https://via.placeholder.com/80';
+                        globalBox.innerHTML += `
+                            <div class="news-item">
+                                <img src="${cleanImg}" class="news-img" alt="world">
+                                <div class="news-details">
+                                    <h4 onclick="window.open('${item.link}', '_blank')">${item.title}</h4>
+                                    <span class="news-meta"><i class="fa-regular fa-clock"></i> Gündem</span>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                });
-
+                        `;
+                    });
+                }
             } catch (error) {
                 console.error("Haberler yüklenirken hata oluştu:", error);
             }
@@ -510,25 +541,24 @@
         async function fetchMovies() {
             try {
                 const movieData = [
-                    {title: "Dune: Part Two", img: "https://tmdb.org"},
-                    {title: "Oppenheimer", img: "https://tmdb.org"},
-                    {title: "The Batman", img: "https://tmdb.org"},
-                    {title: "Interstellar", img: "https://tmdb.org"},
-                    {title: "Blade Runner 2048", img: "https://tmdb.org"},
-                    {title: "Avatar: Way of Water", img: "https://tmdb.org"}
+                    {title: "Dune: Part Two", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400"},
+                    {title: "Oppenheimer", img: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400"},
+                    {title: "The Batman", img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400"},
+                    {title: "Interstellar", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400"}
                 ];
 
                 const cinemaBox = document.getElementById('cinema-box');
-                cinemaBox.innerHTML = '';
-
-                movieData.forEach(movie => {
-                    cinemaBox.innerHTML += `
-                        <div class="movie-card">
-                            <img src="${movie.img}" class="movie-img" alt="${movie.title}">
-                            <div class="movie-title">${movie.title}</div>
-                        </div>
-                    `;
-                });
+                if(cinemaBox) {
+                    cinemaBox.innerHTML = '';
+                    movieData.forEach(movie => {
+                        cinemaBox.innerHTML += `
+                            <div class="movie-card">
+                                <img src="${movie.img}" class="movie-img" alt="${movie.title}">
+                                <div class="movie-title">${movie.title}</div>
+                            </div>
+                        `;
+                    });
+                }
             } catch (error) {
                 console.error("Sinema verisi hatası:", error);
             }
@@ -546,18 +576,14 @@
 
         window.onload = initDashboard;
 
-
-
-        // Fareyi takip eden grid parlama efekti scripti
-const gridGlow = document.getElementById('gridGlow');
-
-window.addEventListener('mousemove', (e) => {
-    // RequestAnimationFrame kullanarak performansı optimize ediyoruz (Kasılmayı önler)
-    window.requestAnimationFrame(() => {
-        gridGlow.style.left = `${e.clientX}px`;
-        gridGlow.style.top = `${e.clientY}px`;
-    });
-});
+        // Fareyi takip eden grid parlama efekti
+        const gridGlow = document.getElementById('gridGlow');
+        window.addEventListener('mousemove', (e) => {
+            window.requestAnimationFrame(() => {
+                gridGlow.style.left = `${e.clientX}px`;
+                gridGlow.style.top = `${e.clientY}px`;
+            });
+        });
     </script>
 </body>
 </html>

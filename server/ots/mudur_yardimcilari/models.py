@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+
+class Md_yrd(models.Model):
+  TC = models.CharField(max_length=11)
+  AdiSoyadi = models.CharField(max_length=50)
+  Sorumlu_oldugu_sınıflar = models.CharField(max_length=255)
+  Aciklama = models.CharField(max_length=255)

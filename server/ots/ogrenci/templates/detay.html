@@ -1,0 +1,14 @@
+{% extends 'iceren.html' %}
+
+{% block govde %}
+
+    <h2>Öğrenci Detay Bilgisi</h2>
+    <br>
+    <p>TC: {{ giden.TC }} </p> <br>
+    <h1>Adı Soyadı: {{ giden.AdiSoyadi }}</h1><br>
+    <p>Açıklama: {{ giden.Aciklama }}</p><br>
+    <a
+       type="button" class="btn btn-outline-success"href="/ogrenci" >Liste Sayfasına Dön
+</a>
+
+{% endblock %}

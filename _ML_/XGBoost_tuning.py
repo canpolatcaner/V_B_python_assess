@@ -1,0 +1,59 @@
+#  XGBOOST algoritması
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import scale
+import matplotlib.pyplot as plt
+import warnings; warnings.filterwarnings('ignore') # Hatalardan kaçınma
+import xgboost; from xgboost import XGBRegressor
+
+#! VERİ YÜKLEME ve HAZIRLAMA
+df = pd.read_csv("Hitters.csv") # Basebolla oyuncaları veri seti
+df = df.dropna() # DataFrame'de eksik (NaN) değeri içeren satırları kaldır
+# one-hot encoding ile dummy (sahte/yapmacık) değişkenler oluşturuyoruz
+# one-hot encoding verileri sayısal olarak ifade etme yöntemidir
+dms = pd.get_dummies(df[['League', 'Division', 'NewLeague']])
+y = df["Walks"]
+X_ = df.drop(["Walks", 'League', 'Division', 'NewLeague'], axis=1).astype('float64')
+X = pd.concat([X_, dms[['League', 'Division', 'NewLeague']]], axis=1)
+# Veriyi eğitim ve test olarak ayırma
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+
+# print("\n\nX_train verisi:\n",X_train)
+print("\n\nX_train verisinin ilk 5 satırı:\n",X_train.head())
+
+#! MODEL KURULUMU
+# windosta
+# pip install xgboost
+# anaconda kullanıyorsanız ve hata aldıysanız, yönetici olarak çalıştırarak deneyin.
+
+# macte kurulumda "The default interactive shell ..." gibi bir hata ile karşılaşırsanız
+# sudo xcodebuild -license
+# bilgisayar şifresini yaz, enter ile devam, agree ile kabul et.
+
+xgb = XGBRegressor().fit(X_train,y_train)
+# print("\n\nxgb regresyon model parametreleri:\n",xgb.get_params())
+
+y_pred = xgb.predict(X_test)
+ilkel_test_hatasi = np.sqrt(mean_squared_error(y_test, y_pred))
+
+print("İlkel test hatası:",ilkel_test_hatasi)
+
+xgb_parametreleri = {"learning_rate":[.1,.01,.5], # Overfiting (aşırı öğrenme) yi engellemek için. Daraltma adım boyu
+                     "max_depth":[2,3,4,5,8], # ağaç derinliği
+                     "n_estimators":[100,200,500,1000], # Kullanılacak ağaç sayısı / tahminci sayısı
+                     "colsample_bytree":[.4,.7,1]
+                     }
+
+xgb_cv_model = GridSearchCV(xgb, xgb_parametreleri, cv= 10, n_jobs=-1, verbose=2).fit(X_train, y_train)
+
+print("\n\nxgb_cv_model.best_params_\n",xgb_cv_model.best_params_)
+
+xgb_tuned = XGBRegressor(colsample_bytree=.4,
+                         learning_rate=.5,
+                         max_depth=3,
+                         n_estimator=100).fit(X_train, y_train)
+y_test = xgb_tuned.predict(X_test)
+th = np.sqrt(mean_squared_error(y_test,y_pred))
+print("\n\nTuned test hatası:",th)
